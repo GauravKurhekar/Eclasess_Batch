@@ -1,0 +1,6 @@
+DeptID,DeptName,ManagerID
+201,HR,101
+202,Finance,102
+203,Engineering,103
+204,Marketing,104
+205,IT,105

@@ -1,0 +1,4 @@
+id,SalesPersonName,ProductName,ItemSold,SoldPrice,Country,Region
+7,Tom Hanks,Widget A,9,450,USA,North
+8,Emma Watson,Gadget B,18,900,Canada,East
+9,David Miller,Widget C,6,300,USA,West

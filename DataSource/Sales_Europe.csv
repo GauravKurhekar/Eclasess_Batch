@@ -1,0 +1,5 @@
+id,SalesPersonName,ProductName,ItemSold,SoldPrice,Country,Region
+1,John Smith,Laptop,1,1400.0,UK,Europe
+2,Marie Curie,Tablet,4,230.9,France,Europe
+3,Hans Müller,Smartphone,6,900.0,Germany,Europe
+4,Anna Rossi,Monitor,2,320.0,Italy,Europe

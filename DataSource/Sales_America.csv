@@ -1,0 +1,5 @@
+id,SalesPersonName,ProductName,ItemSold,SoldPrice,Country,Region
+1,Michael Brown,Laptop,3,1300.0,USA,America
+2,Carlos Mendoza,Tablet,7,220.0,Mexico,America
+3,Maria Lopez,Smartphone,5,880.5,Colombia,America
+4,James Wilson,Monitor,2,310.0,Canada,America

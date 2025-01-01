@@ -1,0 +1,6 @@
+CityID,CityName,Population
+301,New York,8419600
+302,Los Angeles,3980400
+303,Chicago,2716000
+304,Houston,2328000
+305,Phoenix,1690000

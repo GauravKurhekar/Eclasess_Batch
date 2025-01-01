@@ -1,0 +1,4 @@
+id,SalesPersonName,ProductName,ItemSold,SoldPrice,Country,Region
+4,Alice Brown,Widget A,12,600,USA,North
+5,Chris Evans,Gadget B,20,1000,Canada,East
+6,Karen White,Widget C,8,400,USA,West

@@ -1,0 +1,67 @@
+CREATE TABLE Employees1 (
+    EmpID INT ,
+    Name VARCHAR(100),
+    Department VARCHAR(50),
+    Location VARCHAR(50),
+    Salary DECIMAL(10, 2)
+);
+INSERT INTO Employees1 (EmpID, Name, Department, Location, Salary) 
+VALUES 
+(101, 'Ankit Sharma', 'IT', 'Bangalore', 90000.00),
+(102, 'Ritu Verma', 'HR', 'Bangalore', 75000.00),
+(103, 'Kunal Mehra', 'Finance', 'Bangalore', 85000.00),
+(201, 'Sneha Patil', 'IT', 'Pune', 88000.00),
+(202, 'Ravi Kulkarni', 'HR', 'Pune', 70000.00),
+(203, 'Priya Joshi', 'Finance', 'Pune', 81000.00);
+select * from Employees1;
+
+------------------------------------
+
+CREATE TABLE student (
+    StudentID int,
+   FirstName varchar(255),
+    LastName varchar(255),
+    Age int,
+    City varchar(15)
+);
+
+INSERT INTO student (StudentID, FirstName, LastName, Age, City) VALUES
+(1, 'Alice', 'Johnson', 20, 'New York'),
+(2, 'Bob', 'Smith', 22, 'Los Angeles'),
+(3, 'Charlie', 'Brown', 19, 'Chicago'),
+(4, 'Daisy', 'Evans', 21, 'Houston'),
+(5, 'Ethan', 'Taylor', 23, 'Phoenix'),
+(6, 'Fiona', 'Davis', 20, 'Philadelphia'),
+(7, 'George', 'Wilson', 18, 'San Antonio');
+
+select * from student;
+
+------------------------------------
+
+CREATE TABLE total_sales (
+    id INT,
+    SalesPersonName VARCHAR(30),
+    ProductName VARCHAR(30),
+    ItemSold INT,
+    SoldPrice INT,
+    Country VARCHAR(30),
+    Region VARCHAR(30)
+);
+-----------------------------------------
+CREATE TABLE Employee (
+    EmpID INT,
+    EmpName VARCHAR(100),
+    EmpAge INT 
+);
+--------------
+CREATE TABLE Department (
+    DeptID INT,
+    DeptName VARCHAR(100),
+    ManagerID INT 
+);
+------------
+CREATE TABLE Cityinfo (
+    CityID INT ,
+    CityName VARCHAR(100),
+    Population INT
+);

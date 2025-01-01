@@ -1,0 +1,4 @@
+id,SalesPersonName,ProductName,ItemSold,SoldPrice,Country,Region
+1,John Doe,Widget A,10,500,USA,North
+2,Jane Smith,Gadget B,15,750,Canada,East
+3,Bob Johnson,Widget C,5,250,USA,West

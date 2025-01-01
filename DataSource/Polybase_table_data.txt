@@ -1,0 +1,4 @@
+cno,cname,sal
+100,ram,1000
+200,shyam,2000
+300,vihan,3000
