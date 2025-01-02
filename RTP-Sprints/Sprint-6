@@ -57,7 +57,7 @@ Question 117- How to filter specific row of delta table history on condition bas
 Question 118- Create Two Notebooks Notebook1 and Notebook2 , execute or call Notebook1 inside NoteBook2?
 =========================================================================================================================================================
 Question 119- Create two NoteBooks one Note Book Create Employee Dataframe,Second NoteBook Create Dept dataframe, in Second Note Join Dept daaframe with Emp  Dataframe?
-
+=========================================================================================================================================================
 Question 120- How to pass result of one Notebook into another Notebook (use result of notebook1 into notebook2)?
 =========================================================================================================================================================
 Question 121- How to Create Parameters and pass as input to Notebook?
