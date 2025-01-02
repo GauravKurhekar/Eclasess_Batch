@@ -1,4 +1,44 @@
 Question 110- Create a Delta Table with Schema Enforcement: Ensure data integrity by enforcing a predefined schema on Delta tables during data writes? 
+Step1- create table
+  # Create delta table
+  from delta.tables import *
+  # Create Delta table
+  DeltaTable.create(spark) \
+      .tableName("emp_schema9") \
+      .addColumn("ID", "INT") \
+      .addColumn("Name", "STRING") \
+      .location("/FileStore/Tables/Delta/emp_schema9") \
+      .execute()
+step2- insert some record and print it
+  %sql
+  insert into emp_schema9 values(1, 'Gaurav');
+step3- Schema Evolution
+  # let us assume we receive one .csv file which is having one extra column
+  
+  from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+  
+  # Sample data
+  data = [
+      (1, "John","test_data")
+  ]
+  
+  # Define schema for DataFrame
+  schema = StructType([
+      StructField("ID", IntegerType(), True),
+      StructField("Name", StringType(), True),
+      StructField("additional_column1", StringType(), True)
+  ])
+  
+  # Create DataFrame
+  df = spark.createDataFrame(data, schema)
+  
+  # Show DataFrame
+  display(df)
+Step4- If we combine this two tables then it would get failed as second file we have extra column
+  df.write.format('delta').mode('append').saveAsTable('emp_schema9')
+step5- 
+  Use df.write.option('mergeSchema', 'true') to handle the schema mismatch
+  df.write.option('mergeSchema','true').format('delta').mode('append').saveAsTable('emp_schema9')
 =========================================================================================================================================================
 Question 111-Create a Partitioned Delta Table: Organize data into logical subsets based on specified columns for improved query performance?
 =========================================================================================================================================================
