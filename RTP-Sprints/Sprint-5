@@ -1,1 +1,350 @@
+Question 93- Create Two Data Frames Empdf and Deptdf find out which employees dont have any depratment matched in deptdf?
+--Code for Pyspark    
+from pyspark.sql.functions import col
+    
+    # Sample data for Employee DataFrame (Empdf)
+    emp_data = [
+        (1, "John", "HR"),
+        (2, "Jane", "Finance"),
+        (3, "Sam", "Engineering"),
+        (4, "Anna", "Marketing"),
+        (5, "Mike", "IT")
+    ]
+    
+    # Sample data for Department DataFrame (Deptdf)
+    dept_data = [
+        ("HR", "Human Resources"),
+        ("Finance", "Financial Operations"),
+        ("Engineering", "Tech Department")
+    ]
+    
+    # Define schemas for Empdf and Deptdf
+    emp_schema = ["emp_id", "emp_name", "dept_name"]
+    dept_schema = ["dept_name", "dept_description"]
+    
+    # Create DataFrames
+    Empdf = spark.createDataFrame(emp_data, emp_schema)
+    Deptdf = spark.createDataFrame(dept_data, dept_schema)
+-----------------------------------------------------------------------
+    --code for SQL
+    %sql
+    -- Create Employee Table
+    CREATE TABLE Empdf (
+        emp_id INT ,
+        emp_name VARCHAR(50),
+        dept_name VARCHAR(50)
+    );
+    
+    -- Create Department Table
+    CREATE TABLE Deptdf (
+        dept_name VARCHAR(50),
+        dept_description VARCHAR(100)
+    );
+    -- Insert data into Employee Table
+    INSERT INTO Empdf (emp_id, emp_name, dept_name)
+    VALUES 
+    (1, 'John', 'HR'),
+    (2, 'Jane', 'Finance'),
+    (3, 'Sam', 'Engineering'),
+    (4, 'Anna', 'Marketing'),
+    (5, 'Mike', 'IT');
+    
+    -- Insert data into Department Table
+    INSERT INTO Deptdf (dept_name, dept_description)
+    VALUES
+    ('HR', 'Human Resources'),
+    ('Finance', 'Financial Operations'),
+    ('Engineering', 'Tech Department');
+    
+    select * from Empdf;
+    select * from Deptdf;
+======================================================================================
+Question 94- Write program in pyspark to count the employee in each department?
+    --code for pyspark
+    from pyspark.sql.functions import count
+    # Sample data for Employee DataFrame (Empdf)
+    emp_data = [
+        (1, "John", "HR"),
+        (2, "Jane", "Finance"),
+        (3, "Sam", "Engineering"),
+        (4, "Anna", "Marketing"),
+        (5, "Mike", "IT"),
+        (6, "Paul", "HR"),
+        (7, "Linda", "Engineering")
+    ]
+    
+    # Define schema for Empdf
+    emp_schema = ["emp_id", "emp_name", "dept_name"]
+    
+    # Create DataFrame
+    Empdf = spark.createDataFrame(emp_data, emp_schema)
+---------------------------------------------------------
+    --code for SQL
+    %sql
+    CREATE TABLE Empdf (
+        emp_id INT,        -- Unique identifier for each employee
+        emp_name VARCHAR(50),          -- Name of the employee
+        dept_name VARCHAR(50)          -- Department name where the employee works
+    );
+    
+    
+    CREATE TABLE Deptdf (
+        dept_name VARCHAR(50),   -- Unique department name
+        dept_description VARCHAR(100)        -- Description of the department
+    );
+    -- Insert data into Employee Table (Empdf)
+    INSERT INTO Empdf (emp_id, emp_name, dept_name)
+    VALUES 
+    (1, 'John', 'HR'),
+    (2, 'Jane', 'Finance'),
+    (3, 'Sam', 'Engineering'),
+    (4, 'Anna', 'Marketing'),
+    (5, 'Mike', 'IT'),
+    (6, 'Paul', 'HR'),
+    (7, 'Linda', 'Engineering');
+    
+    -- Insert data into Department Table (Deptdf)
+    INSERT INTO Deptdf (dept_name, dept_description)
+    VALUES
+    ('HR', 'Human Resources'),
+    ('Finance', 'Financial Operations'),
+    ('Engineering', 'Tech Department'),
+    ('Marketing', 'Marketing & Advertising'),
+    ('IT', 'Information Technology');
+    select * from Empdf;
+    select * from Deptdf;
+=======================================================================================
+Question 95- Find out Each Department wise 2nd highest salaries employees' details?
+    --Code for Pyspark
+    from pyspark.sql.window import Window
+    from pyspark.sql.functions import col, row_number
+    
+    # Sample Data
+    data = [
+        ("Alice", "HR", 5000),
+        ("Bob", "HR", 7000),
+        ("Charlie", "HR", 6000),
+        ("David", "IT", 8000),
+        ("Eve", "IT", 9000),
+        ("Frank", "IT", 7000),
+        ("Grace", "Finance", 6000),
+        ("Heidi", "Finance", 8000),
+    ]
+    
+    columns = ["employee_name", "department", "salary"]
+    
+    # Create DataFrame
+    df = spark.createDataFrame(data, columns)
+    
+    df.show()
+-------------------------------------------------------------
+    --code for SQL
+    %sql
+    CREATE TABLE sec_hig_sal_deptwise_Emp (
+        EmployeeID INT ,
+        EmployeeName VARCHAR(100),
+        Department VARCHAR(100),
+        Salary INT
+    );
+    INSERT INTO sec_hig_sal_deptwise_Emp (EmployeeID, EmployeeName, Department, Salary)
+    VALUES
+    (1, 'Alice', 'HR', 5000),
+    (2, 'Bob', 'HR', 7000),
+    (3, 'Charlie', 'HR', 6000),
+    (4, 'David', 'IT', 8000),
+    (5, 'Eve', 'IT', 9000),
+    (6, 'Frank', 'IT', 7000),
+    (7, 'Grace', 'Finance', 6000),
+    (8, 'Heidi', 'Finance', 8000);
+    select * from sec_hig_sal_deptwise_Emp;
+=============================================================================================
+Question 96- Find out which ever employees in each department there salaries greater then 2000?
+    --code for Pyspark
+    from pyspark.sql.functions import col
+    # Sample data
+    data = [
+        (1, "John", "HR", 2500),
+        (2, "Alice", "IT", 1800),
+        (3, "Bob", "Finance", 3000),
+        (4, "Emma", "IT", 2200),
+        (5, "Sophia", "HR", 1200),
+        (6, "David", "Finance", 2100)
+    ]
+    
+    # Schema
+    columns = ["EmpID", "Name", "Department", "Salary"]
+    
+    # Create DataFrame
+    df = spark.createDataFrame(data, columns)
+    
+    # Filter employees with salary > 2000
+    filtered_df = df.filter(col("Salary") > 2000)
+    
+    # Show result
+    filtered_df.show()
+------------------------------------------------------------
+    --Code for SQL
+    %sql
+    CREATE TABLE Employees (
+        EmpID INT PRIMARY KEY,
+        Name NVARCHAR(50),
+        Department NVARCHAR(50),
+        Salary DECIMAL(10, 2)
+    );
+    INSERT INTO Employees (EmpID, Name, Department, Salary)
+    VALUES 
+    (1, 'John', 'HR', 2500),
+    (2, 'Alice', 'IT', 1800),
+    (3, 'Bob', 'Finance', 3000),
+    (4, 'Emma', 'IT', 2200),
+    (5, 'Sophia', 'HR', 1200),
+    (6, 'David', 'Finance', 2100);
+    select * from Employees;
+======================================================================================================
+Question 97- Create Data Frame contains Empno,Ename,Managerid, display Employeename and Managername?
+    # Code for Pyspark
+    from pyspark.sql.functions import col
+    # Sample data
+    data = [
+        (1, "John", None),     # No manager (CEO or top-level)
+        (2, "Alice", 1),       # Alice's manager is John
+        (3, "Bob", 1),         # Bob's manager is John
+        (4, "Emma", 2),        # Emma's manager is Alice
+        (5, "Sophia", 2),      # Sophia's manager is Alice
+        (6, "David", 3)        # David's manager is Bob
+    ]
+    
+    # Schema
+    columns = ["EmpNo", "Ename", "ManagerId"]
+    
+    # Create DataFrame
+    df = spark.createDataFrame(data, columns)
+    
+    # Self-join to get employee name and manager name
+    result_df = df.alias("e") \
+        .join(df.alias("m"), col("e.ManagerId") == col("m.EmpNo"), "left") \
+        .select(
+            col("e.EmpNo").alias("EmpNo"),
+            col("e.Ename").alias("EmployeeName"),
+            col("m.Ename").alias("ManagerName")
+        )
+    
+    # Show result
+    result_df.show()
+------------------------------------------------------------------
+--Code for SQL
+    %sql
+    CREATE TABLE Emp_manager (
+        EmpNo INT,
+        Ename VARCHAR(50),
+        ManagerId INT NULL
+    );
+    INSERT INTO Emp_manager (EmpNo, Ename, ManagerId)
+    VALUES 
+    (1, 'John', NULL),    -- John has no manager
+    (2, 'Alice', 1),      -- Alice's manager is John
+    (3, 'Bob', 1),        -- Bob's manager is John
+    (4, 'Emma', 2),       -- Emma's manager is Alice
+    (5, 'Sophia', 2),     -- Sophia's manager is Alice
+    (6, 'David', 3);      -- David's manager is Bob
+    select * from Emp_manager;
+=======================================================================================
+Question 98- Create Mount Point Blob Storage Account by using Azure Active Directory app registration(CleintID,TenantId,SecretKey)?
+
+    # 1- Replace storage acc name(5 times)
+    # 2- <application-id>- Replace application id withoud paranthesis ("") on 3rd line with app_id
+    # 3- service_credential- Replace service credential with secret on 4th line without ""
+    # 4- <directory-id>-Replace directory id with tenant_id/clientID on 5th line
+    # Note- mention client_id in curly bracket {tenant_id} and give f string before https, 
+    # for ex f"https://login.microsoftonline.com/{tenant_id}/oauth2/token")
+    
+    spark.conf.set("fs.azure.account.auth.type.<storage-account>.dfs.core.windows.net", "OAuth")
+    
+    spark.conf.set("fs.azure.account.oauth.provider.type.<storage-account>.dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
+    
+    spark.conf.set("fs.azure.account.oauth2.client.id.<storage-account>.dfs.core.windows.net", "<application-id>")
+    
+    spark.conf.set("fs.azure.account.oauth2.client.secret.<storage-account>.dfs.core.windows.net", service_credential)
+    
+    spark.conf.set("fs.azure.account.oauth2.client.endpoint.<storage-account>.dfs.core.windows.net", "https://login.microsoftonline.com/<directory-id>/oauth2/token")
+===========================================================================================
+Question 99- Create Mount Point blob storage Account by using Azure Active directory App registration(Azure Key Vault- pass SecretKey)?
+    # To test the mount point by using access key, Replace the AccountKey by copying from Azure access key
+    dbutils.fs.mount(
+      source = "wasbs://<container-name>@<storage-account-name>.blob.core.windows.net/",
+      mount_point = "/mnt/<mount-name>",
+      extra_configs = {"fs.azure.account.key.<storage-account-name>.blob.core.windows.net": "AccountKey"})
+--------------------------------------------------------------------------------------------
+    # change <storage-account-name> twice
+    # change <scope_name> by coping from CLI, enter scope_name in quote
+    # change <key_name> by copying from Azure Key vault, enter scope_name in quote
+    
+    dbutils.fs.mount(
+      source="wasbs://<container-name>@<storage-account-name>.blob.core.windows.net/",
+      mount_point="/mnt/blobstorage6",
+      extra_configs={
+        "fs.azure.account.key.<storage-account-name>.blob.core.windows.net": dbutils.secrets.get("<scope_name>", "<key_name>")
+      }
+    )
+=======================================================================================
+Question 100- (userdat1.parquet) Read File from Blob Storage and Write Into DBFS like CSV?
+
+=======================================================================================
+Question 101- (userdat1.parquet)  Read File from Blob Storage and Write Into DBFS in .CSV format(before writing apply some transfromation). filter only 25 % of rows into target?
+=======================================================================================
+Question 102- Read Multiple files from Blob Storage (EmpBangalore, EmpPune) into single dataframe then Write into dbfs in a Single csv file?/
+=======================================================================================
+Question 103- We have three .csv files in blob and want to read only two files into single dataframe then write into dbfs into a single .csv file?
+=======================================================================================
+Question 104- Write Data from above Dataframe into CSV file in Data Lake Gen2?
+=======================================================================================
+Question 105- Write Data from Above Dataframe into Azure SQL Database Table?
+    jdbcUsername = "gaurav-server"      # user name which you create while creating server in azure sql
+    jdbcPassword = "Admin@123"          # password of user
+    jdbcHostname = "gaurav-server1.database.windows.net"    # hostname is servername
+    jdbcDatabase = "gaurav-azure-db"    # Database name
+    jdbcPort = 1433                     # default port number
+     
+    jdbcUrl = f"jdbc:sqlserver://{jdbcHostname}:{jdbcPort};database={jdbcDatabase};user={jdbcUsername};password={jdbcPassword}"
+    print(jdbcUrl)
+=============================================================================================
+Question 106- Write Data from Above Dataframe into Azure Synapse Dedicated SQL Pool?
+Question 107- While Establish connection to Synapse Dedicated SQL pool keep password into Azure keyvalut?
+Question 108- create one dataframe contains data of customer related to different city, when writing data into target blob storage in parquet(each city wise load data to each file)?
+    # Step 1- set the spark configuration
+    spark.conf.set(
+        "fs.azure.account.key.gauravstorageacc12.dfs.core.windows.net",
+        "Account-key")
+    # Step 2: Create a DataFrame containing customer data
+    data = [
+        (101, "Alice", "Bangalore", 25000),
+        (102, "Bob", "Pune", 30000),
+        (103, "Charlie", "Mumbai", 40000),
+        (104, "David", "Delhi", 45000),
+        (105, "Eve", "Chennai", 35000),
+        (106, "Frank", "Bangalore", 27000),
+        (107, "Grace", "Pune", 31000),
+        (108, "Hank", "Mumbai", 42000),
+        (109, "Ivy", "Delhi", 46000),
+        (110, "Jack", "Chennai", 36000)
+    ]
+    
+    columns = ["CustomerID", "Name", "City", "Salary"]
+    
+    df = spark.createDataFrame(data, schema=columns)
+    
+    # Step 2: Write DataFrame to Azure Blob Storage in Parquet format
+    # Ensure city-wise data is saved to separate files using partitionBy
+    output_path = "abfss://gaurav-container@gauravstorageacc12.dfs.core.windows.net/customer-data/"
+=====================================================================================================================
+Question 109- "Create DataFrames: Create two DataFrames, one for departments and one for employees.
+              Perform Inner Join and Aggregate: Perform an inner join between the department and employee DataFrames on the department name. Then, 
+              aggregate the data on the department name to get the total salary and total number of employees for each department.
+              Apply Filter: Apply a filter to select only those departments which have more than 2 employees.
+              Write Filtered Result to DBFS as CSV: Write the filtered result (departments with more than 2 employees) to a CSV file in DBFS.
+              Read CSV File from DBFS and Create Temp View: Read the CSV file from DBFS into a DataFrame. Create a temporary view on this DataFrame.
+              Write SQL Query to Filter Data: Write an SQL query to filter the data from the temporary view. Specifically, 
+              filter for departments where the totWrite Result Back to DBFS as Parquet File: Execute the SQL query on the temporary view and write the result back to DBFS as a Parquet file 
+              where salary is greater than 2000."
+=======================================================================================
 
