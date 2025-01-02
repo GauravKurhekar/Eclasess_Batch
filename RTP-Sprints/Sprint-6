@@ -1,1 +1,47 @@
+Question 110- Create a Delta Table with Schema Enforcement: Ensure data integrity by enforcing a predefined schema on Delta tables during data writes? 
+=========================================================================================================================================================
+Question 111-Create a Partitioned Delta Table: Organize data into logical subsets based on specified columns for improved query performance?
+=========================================================================================================================================================
+Question 112- Read Specific Data Subsets using Partition Filters: Efficiently query and retrieve data by filtering on partition columns to reduce data scanning?
+=========================================================================================================================================================
+Question 113- Read Old Table Versions with Time Travel Filters: Access historical table versions by specifying a timestamp or version number for analysis or rollback?
+=========================================================================================================================================================
+Question 114- Perform Data Merges (Updates): Update, insert, or delete data based on specified conditions to synchronize or incrementally update the table?
+=========================================================================================================================================================
+Question 115- Analyze Delta Table History: Examine the transaction log to track changes, understand table evolution, and diagnose issues?
+=========================================================================================================================================================
+Question 116- Rollback to a Previous Table Version: Revert the Delta table to a previous state by specifying a timestamp or version number for rollback?
+=========================================================================================================================================================
+Question 117- How to filter specific row of delta table history on condition based (deltatable.history().filter(version==1)?
+=========================================================================================================================================================
+Question 118- Create Two Notebooks Notebook1 and Notebook2 , execute or call Notebook1 inside NoteBook2?
+=========================================================================================================================================================
+Question 119- Create two NoteBooks one Note Book Create Employee Dataframe,Second NoteBook Create Dept dataframe, in Second Note Join Dept daaframe with Emp  Dataframe?
+
+Question 120- How to pass result of one Notebook into another Notebook (use result of notebook1 into notebook2)?
+=========================================================================================================================================================
+Question 121- How to Create Parameters and pass as input to Notebook?
+Question 122- Create dataframe contains 10 rows, i want you to write this data into multiple files like parquet formate. pass parameter value. 3?
+=========================================================================================================================================================
+Question 123- How to do the error handling in Databricks notebooks. Is it possible to drop an email and save that log information into a file saved in a Blob?
+=========================================================================================================================================================
+Question 124- How to schedule notebooks without using Data Factory or Databricks jobs?
+=========================================================================================================================================================
+Question 125- I want to run the notebooks without using data factory or databricks?
+=========================================================================================================================================================
+Question 126- I want to run Datafactory pipelines without using triggers in datafactory?
+=========================================================================================================================================================
+Question 127- How to monitor and see the log analytics of Jobs scheduled for the Data factory pipeline and Databricks notebooks?
+=========================================================================================================================================================
+Question 128- How to maintain the version control of the notebooks with Azure Devops Git repository?
+=========================================================================================================================================================
+
+
+
+
+
+
+
+
+Question 129- What are the techniques used to improve the performance of a Notebook? - broadcast variable , broadcast joins, caching etc...
 
