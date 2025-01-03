@@ -299,7 +299,17 @@ Question 103- We have three .csv files in blob and want to read only two files i
 Question 104- Write Data from above Dataframe into CSV file in Data Lake Gen2?
 =======================================================================================
 Question 105- Write Data from Above Dataframe into Azure SQL Database Table?
-    jdbcUsername = "gaurav-server"      # user name which you create while creating server in azure sql
+    jdbcUsername = ""   # user name which you create while creating server in azure sql
+    jdbcPassword = ""   # password of user
+    jdbcHostname = ""   # hostname is servername
+    jdbcDatabase = ""   # Database name
+    jdbcPort =          # default port number
+     
+    jdbcUrl = f"jdbc:sqlserver://{jdbcHostname}:{jdbcPort};database={jdbcDatabase};user={jdbcUsername};password={jdbcPassword}"
+    print(jdbcUrl)
+
+------------------------------------------------------------------------------------------------
+jdbcUsername = "gaurav-server"      # user name which you create while creating server in azure sql
     jdbcPassword = "Admin@123"          # password of user
     jdbcHostname = "gaurav-server1.database.windows.net"    # hostname is servername
     jdbcDatabase = "gaurav-azure-db"    # Database name
