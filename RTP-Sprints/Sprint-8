@@ -1,1 +1,20 @@
 
+# -- Step 1: Create the table
+# CREATE TABLE SimpleTable (
+#     ID INT ,
+#     Name VARCHAR(50),
+#     Age INT,
+#     Country VARCHAR(50)
+# );
+
+# -- Step 2: Insert 5 records into the table
+# INSERT INTO SimpleTable (ID, Name, Age, Country)
+# VALUES 
+# (1, 'Rahul Sharma', 30, 'India'),
+# (2, 'Priya Mehta', 28, 'India'),
+# (3, 'Amit Kumar', 35, 'India'),
+# (4, 'Sneha Patil', 25, 'India'),
+# (5, 'Karan Singh', 32, 'India');
+
+# -- Step 3: Verify the records
+# SELECT * FROM SimpleTable;
