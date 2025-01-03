@@ -1,1 +1,14 @@
+Question 151- How to Implement SCD2 Type in Data Flows?
+
+--Create table for SCD_Type2 Query
+    CREATE TABLE SCD_Type2_Emp (
+        SurrogateKey int identity,
+        EmpID INT,
+        EmpName NVARCHAR(100),
+        Gender NVARCHAR(10),
+        Country NVARCHAR(50),
+        IsActive int
+    );
+    insert into SCD_Type2_Emp values(101, 'Rahul Singh','Male','India',1)
+    select * from SCD_Type2_Emp;
 
