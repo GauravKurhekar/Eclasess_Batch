@@ -41,6 +41,24 @@ step5-
   df.write.option('mergeSchema','true').format('delta').mode('append').saveAsTable('emp_schema9')
 =========================================================================================================================================================
 Question 111-Create a Partitioned Delta Table: Organize data into logical subsets based on specified columns for improved query performance?
+%sql
+-- Create the Partitioned Delta Table
+CREATE TABLE partitioned_emp_sql(
+  ID INT,
+  Name STRING,
+  Country STRING
+)
+USING DELTA
+--partition the data
+LOCATION '/FileStore/Tables/Delta/partitioned_emp_sql';
+
+-- Insert Data into the Partitioned Delta Table
+INSERT INTO partitioned_emp_sql VALUES
+(1, 'Alice', 'India'),
+(2, 'Bob', 'USA'),
+(3, 'Charlie', 'France'),
+(4, 'David', 'Germany'),
+(5, 'Eva', 'Japan');
 =========================================================================================================================================================
 Question 112- Read Specific Data Subsets using Partition Filters: Efficiently query and retrieve data by filtering on partition columns to reduce data scanning?
 =========================================================================================================================================================
@@ -57,6 +75,69 @@ Question 117- How to filter specific row of delta table history on condition bas
 Question 118- Create Two Notebooks Notebook1 and Notebook2 , execute or call Notebook1 inside NoteBook2?
 =========================================================================================================================================================
 Question 119- Create two NoteBooks one Note Book Create Employee Dataframe,Second NoteBook Create Dept dataframe, in Second Note Join Dept daaframe with Emp  Dataframe?
+
+  # Step1- create empdf in first notebook
+  
+  # Create the Employee DataFrame
+  from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+  
+  # Define schema for Employee DataFrame
+  emp_schema = StructType([
+      StructField("emp_id", IntegerType(), True),
+      StructField("emp_name", StringType(), True),
+      StructField("dept_id", IntegerType(), True)
+  ])
+  
+  # Sample employee data
+  emp_data = [
+      (1, "Alice", 101),
+      (2, "Bob", 102),
+      (3, "Charlie", 101),
+      (4, "David", 103)
+  ]
+  
+  # Create Employee DataFrame
+  emp_df = spark.createDataFrame(data=emp_data, schema=emp_schema)
+  
+  # Display the Employee DataFrame
+  emp_df.show()
+  
+  # Register as a temporary view for SQL or share with another notebook
+  #emp_df.createOrReplaceTempView("Employee")
+
+# Step 2- Create deptdf in second notebook
+      
+      # Create the Department DataFrame
+      
+      from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+      
+      # Define schema for Department DataFrame
+      dept_schema = StructType([
+          StructField("dept_id", IntegerType(), True),
+          StructField("dept_name", StringType(), True)
+      ])
+      
+      # Sample department data
+      dept_data = [
+          (101, "HR"),
+          (102, "Engineering"),
+          (103, "Marketing")
+      ]
+      
+      # Create Department DataFrame
+      dept_df = spark.createDataFrame(data=dept_data, schema=dept_schema)
+      
+      # Display the Department DataFrame
+      dept_df.show()
+      
+      # Register as a temporary view for SQL or share with another notebook
+      #dept_df.createOrReplaceTempView("Department")
+
+# Step3- execute the run command and then join command
+      %run "./notebook1"
+      
+      join_table = emp_df.join(dept_df, emp_df.dept_id == dept_df.dept_id, how = "inner")
+      display(join_table)
 =========================================================================================================================================================
 Question 120- How to pass result of one Notebook into another Notebook (use result of notebook1 into notebook2)?
 =========================================================================================================================================================
