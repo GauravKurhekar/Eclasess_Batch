@@ -132,6 +132,7 @@ dept_df.show()
 Question 120- How to pass result of one Notebook into another Notebook (use result of notebook1 into notebook2)?
 =========================================================================================================================================================
 Question 121- How to Create Parameters and pass as input to Notebook?
+=========================================================================================================================================================
 Question 122- Create dataframe contains 10 rows, i want you to write this data into multiple files like parquet formate. pass parameter value. 3?
 =========================================================================================================================================================
 Question 123- How to do the error handling in Databricks notebooks. Is it possible to drop an email and save that log information into a file saved in a Blob?
@@ -139,6 +140,40 @@ Question 123- How to do the error handling in Databricks notebooks. Is it possib
 Question 124- How to schedule notebooks without using Data Factory or Databricks jobs?
 =========================================================================================================================================================
 Question 125- I want to run the notebooks without using data factory or databricks?
+# By using python scripts
+import requests
+import json
+
+# Databricks Configuration
+DATABRICKS_INSTANCE = "https://<your-databricks-instance>"  # e.g., https://adb-1234567890123456.5.azuredatabricks.net
+TOKEN = "your-personal-access-token"
+NOTEBOOK_PATH = "/path/to/notebook"  # Full path to the Databricks notebook
+CLUSTER_ID = "your-cluster-id"      # Cluster ID to run the notebook
+
+# REST API URL
+URL = f"{DATABRICKS_INSTANCE}/api/2.1/jobs/runs/submit"
+
+# Payload to trigger the notebook
+payload = {
+    "run_name": "Scheduled Notebook Run",
+    "existing_cluster_id": CLUSTER_ID,
+    "notebook_task": {
+        "notebook_path": NOTEBOOK_PATH
+    }
+}
+
+# Make the API request
+headers = {"Authorization": f"Bearer {TOKEN}"}
+response = requests.post(URL, headers=headers, json=payload)
+
+# Check the response
+if response.status_code == 200:
+    print("Notebook run triggered successfully!")
+    print("Response:", json.dumps(response.json(), indent=2))
+else:
+    print("Failed to trigger the notebook!")
+    print("Response:", response.text)
+
 =========================================================================================================================================================
 Question 126- I want to run Datafactory pipelines without using triggers in datafactory?
 =========================================================================================================================================================
