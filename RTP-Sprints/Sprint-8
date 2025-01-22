@@ -1,20 +1,26 @@
+Question 144- Copy Data from on prem sql server table, only newly added and modified rows into blob storage based on timestamp?
 
-# -- Step 1: Create the table
-# CREATE TABLE SimpleTable (
-#     ID INT ,
-#     Name VARCHAR(50),
-#     Age INT,
-#     Country VARCHAR(50)
-# );
+-- Create table_source
+CREATE TABLE table_source (
+    productKey INT,
+    SalesDate DATETIME,
+    SalesAmount FLOAT
+);
 
-# -- Step 2: Insert 5 records into the table
-# INSERT INTO SimpleTable (ID, Name, Age, Country)
-# VALUES 
-# (1, 'Rahul Sharma', 30, 'India'),
-# (2, 'Priya Mehta', 28, 'India'),
-# (3, 'Amit Kumar', 35, 'India'),
-# (4, 'Sneha Patil', 25, 'India'),
-# (5, 'Karan Singh', 32, 'India');
+-- Insert sample records into table_source
+INSERT INTO table_source (productKey, SalesDate, SalesAmount) VALUES 
+(1, '2024-01-15', 150.75),
+(2, '2024-02-20', 200.50),
+(3, '2024-03-25', 300.10),
+(4, '2024-04-10', 400.20),
+(5, '2024-05-05', 250.60);
 
-# -- Step 3: Verify the records
-# SELECT * FROM SimpleTable;
+-- Create table_target
+CREATE TABLE table_target (
+    productKey INT,
+    SalesDate DATETIME,
+    SalesAmount FLOAT
+);
+select * from table_source;
+select * from table_target;
+========================================================================================================================
