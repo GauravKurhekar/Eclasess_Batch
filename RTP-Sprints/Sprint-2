@@ -1,1 +1,64 @@
+Question 18- Create two tables using query editor option(insert, update, delete records)
 
+CREATE TABLE Students (
+    StudentID INT,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Age INT,
+    Gender VARCHAR(10)
+);
+-- Create the second table: Courses
+CREATE TABLE Courses (
+    CourseID INT,
+    CourseName VARCHAR(100),
+    Credits INT
+);
+--Insert 5 records into the Students table
+INSERT INTO Students (FirstName, LastName, Age, Gender)
+VALUES
+    ('Alice', 'Johnson', 20, 'Female'),
+    ('Bob', 'Smith', 22, 'Male'),
+    ('Charlie', 'Brown', 19, 'Male'),
+    ('Diana', 'Miller', 21, 'Female'),
+    ('Ethan', 'Davis', 23, 'Male');
+
+--Insert 5 records into the Courses table
+INSERT INTO Courses (CourseID, CourseName, Credits) VALUES
+(101, 'Introduction to Programming', 3),
+(102, 'Data Structures and Algorithms', 4),
+(103, 'Database Management Systems', 3),
+(104, 'Operating Systems', 4),
+(105, 'Computer Networks', 3),
+===============================================================================================================
+
+Q29- I have two tables in sql server, source and target, in source (eno,ename,sal,inserteddate) and in Target (eno,ename,sal), If eno exist in source but not in target table then insert the data in target, 
+1. Table Structures
+Source Table
+
+CREATE TABLE Source (
+    eno INT PRIMARY KEY,
+    ename VARCHAR(50),
+    sal DECIMAL(10, 2),
+    inserteddate DATETIME
+);
+Target Table
+
+CREATE TABLE Target (
+    eno INT PRIMARY KEY,
+    ename VARCHAR(50),
+    sal DECIMAL(10, 2)
+);
+
+2. Populate Tables with Sample Data 
+Insert into Source Table
+
+INSERT INTO Source (eno, ename, sal, inserteddate)
+VALUES 
+(1, 'Alice', 50000, GETDATE()),
+(2, 'Bob', 60000, GETDATE()),
+(3, 'Charlie', 70000, GETDATE());
+
+Insert into Target Table
+INSERT INTO Target (eno, ename, sal)
+VALUES 
+(1, 'Alice', 50000);
