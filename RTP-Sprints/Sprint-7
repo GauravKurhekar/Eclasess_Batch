@@ -1,1 +1,10 @@
+Question 132- How to Copy Data From Blob Storage to Azure SQL Database Table?
 
+CREATE TABLE Employees (
+    EmpID INT,
+    Name NVARCHAR(100),
+    Department NVARCHAR(100),
+    Location NVARCHAR(100),
+    Salary Float
+);
+--------------------------------------------------------
