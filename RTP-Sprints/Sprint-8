@@ -36,6 +36,13 @@ CREATE TABLE table_target (
 );
 select * from table_source;
 select * from table_target;
+
+--Add some record in table_source
+INSERT INTO table_source (productKey, SalesDate, SalesAmount) VALUES 
+(6, '2024-05-15', 150.75),
+(7, '2024-06-20', 200.50),
+(8, '2024-07-25', 300.10);
+
 ========================================================================================================================
 Question 145- Copy Data from on prem sql server table,only newly added and modified rows into blob storage based on timestamp for multiple Tables using for each loop?
 
