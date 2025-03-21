@@ -1,3 +1,16 @@
+140- Copy 3 files from BLOB with same schema but data is different into single Azure SQL Table?
+CREATE TABLE total_region_sale (
+id INT, SalesPersonName VARCHAR(30), ProductName VARCHAR(30), ItemSold INT, SoldPrice INT, Country VARCHAR(30), Region VARCHAR(30)
+); 
+SELECT * FROM total_region_sale;
+
+========================================================================================================================
+Question 142- If File exist in Blob storage then copy into azure sql table else send email notification like keep file in blob storage.
+
+{"FileExist":"Customer file does exists, please proceed for loading",
+"Pipelinename":"@{pipeline().Pipeline}"}
+========================================================================================================================
+
 Question 144- Copy Data from on prem sql server table, only newly added and modified rows into blob storage based on timestamp?
 
 -- Create table_source
