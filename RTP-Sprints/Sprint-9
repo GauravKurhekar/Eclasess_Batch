@@ -1,3 +1,20 @@
+Question 150- How to Implement SCD1 Type in Data Flows?
+CREATE TABLE SCD_Type1_Emp (
+    EmpID INT,    
+    Name VARCHAR(100), 
+    Country VARCHAR(50) , 
+    Department VARCHAR(50) 
+);
+
+-- Insert sample rows
+INSERT INTO SCD_Type1_Emp (EmpID, Name, Country, Department)
+VALUES
+    (101, 'Amit Sharma', 'India', 'IT'),
+    (102, 'Ashwini Singh', 'India', 'Electronic');
+
+select * from SCD_Type1_Emp;
+
+===============================================================================================================
 Question 151- How to Implement SCD2 Type in Data Flows?
 
 --Create table for SCD_Type2 Query
