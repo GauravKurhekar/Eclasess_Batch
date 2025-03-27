@@ -13,7 +13,11 @@ VALUES
     (102, 'Ashwini Singh', 'India', 'Electronic');
 
 select * from SCD_Type1_Emp;
-
+--Add some records
+106, Anjali Mehta, India, Computer
+107, Mahesh Iche, US, Service Desk
+108, Mayur Shinde, UK, Software
+109, Sagar Kale, US, Service Desk
 ===============================================================================================================
 Question 151- How to Implement SCD2 Type in Data Flows?
 
