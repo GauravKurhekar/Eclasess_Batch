@@ -33,3 +33,77 @@ Question 151- How to Implement SCD2 Type in Data Flows?
     insert into SCD_Type2_Emp values(101, 'Rahul Singh','Male','India',1)
     select * from SCD_Type2_Emp;
 
+===============================================================================================================
+
+Question- Create two NoteBooks one Note Book Create Employee Dataframe,Second NoteBook Create Dept dataframe, in Second Note Join Dept daaframe with Emp Dataframe?
+
+# Create the Employee DataFrame
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+# Define schema for Employee DataFrame
+emp_schema = StructType([
+    StructField("emp_id", IntegerType(), True),
+    StructField("emp_name", StringType(), True),
+    StructField("dept_id", IntegerType(), True)
+])
+
+# Sample employee data
+emp_data = [
+    (1, "Alice", 101),
+    (2, "Bob", 102),
+    (3, "Charlie", 101),
+    (4, "David", 103)
+]
+
+# Create Employee DataFrame
+emp_df = spark.createDataFrame(data=emp_data, schema=emp_schema)
+
+# Display the Employee DataFrame
+emp_df.show()
+
+---------------------
+
+# Create the Department DataFrame
+
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+# Define schema for Department DataFrame
+dept_schema = StructType([
+    StructField("dept_id", IntegerType(), True),
+    StructField("dept_name", StringType(), True)
+])
+
+# Sample department data
+dept_data = [
+    (101, "HR"),
+    (102, "Engineering"),
+    (103, "Marketing")
+]
+
+# Create Department DataFrame
+dept_df = spark.createDataFrame(data=dept_data, schema=dept_schema)
+
+# Display the Department DataFrame
+dept_df.show()
+=====================================================================================
+# Schema evolution
+
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+# Sample data
+data = [
+    (1, "John","test_data")
+]
+
+# Define schema for DataFrame
+schema = StructType([
+    StructField("ID", IntegerType(), True),
+    StructField("Name", StringType(), True),
+    StructField("additional_column1", StringType(), True)
+])
+
+# Create DataFrame
+df = spark.createDataFrame(data, schema)
+
+# Show DataFrame
+display(df)
