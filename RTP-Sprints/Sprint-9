@@ -107,3 +107,87 @@ df = spark.createDataFrame(data, schema)
 
 # Show DataFrame
 display(df)
+=====================================================================================
+
+# Version controlling in delta table
+%sql
+--STEP1- Create table
+-- Create the Delta Table
+CREATE TABLE delta_table(
+  ID INT,
+  Name STRING,
+  Country STRING
+)
+USING DELTA
+LOCATION '/FileStore/Tables/Delta/delta_table';
+
+%sql
+--Step2- Insert Data into the Partitioned Delta Table
+INSERT INTO delta_table VALUES
+(1, 'Alice', 'India'),
+(2, 'Bob', 'USA'),
+(3, 'Charlie', 'France'),
+(4, 'David', 'Germany'),
+(5, 'Eva', 'Japan');
+
+--Step 2: Perform some Updates and delete to Generate Versions
+
+-- Update the table to create a new version
+UPDATE delta_table
+SET Name = 'Alice_updated'
+WHERE ID = 1;
+
+-- Add another version by deleting data
+DELETE FROM delta_table WHERE Country = 'France';
+=====================================================================================
+-- SCD Type1 implementation using SQL
+%sql
+-- Step 1: Create the Target Table (Existing Customers)
+CREATE TABLE customer (
+    customer_id INT,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    city VARCHAR(50)
+);
+
+-- Insert Initial Data
+INSERT INTO customer VALUES 
+(1, 'Alice', 'alice@example.com', 'New York'),
+(2, 'Bob', 'bob@example.com', 'San Francisco'),
+(3, 'Charlie', 'charlie@example.com', 'Seattle');
+
+-- Check Initial Data
+SELECT * FROM customer;
+
+%sql
+-- Step 2: Create a Staging Table (Incoming Data)
+CREATE TABLE customer_staging (
+    customer_id INT,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    city VARCHAR(50)
+);
+
+-- Insert New and Updated Data
+INSERT INTO customer_staging VALUES 
+(1, 'Alice', 'alice_new@example.com', 'New York'), -- Email Changed
+(2, 'Bob', 'bob@example.com', 'San Francisco'), -- No Change
+(3, 'Charlie', 'charlie@example.com', 'Seattle'), -- No Change
+(4, 'David', 'david@example.com', 'Los Angeles'); -- New Customer
+
+%sql
+-- Step 3: Perform UPSERT (Merge Update and Insert)
+MERGE INTO customer AS tgt
+USING customer_staging AS src
+ON tgt.customer_id = src.customer_id
+
+WHEN MATCHED THEN
+    UPDATE SET 
+        tgt.name = src.name,
+        tgt.email = src.email,
+        tgt.city = src.city
+
+WHEN NOT MATCHED THEN
+    INSERT (customer_id, name, email, city)
+    VALUES (src.customer_id, src.name, src.email, src.city);
+
