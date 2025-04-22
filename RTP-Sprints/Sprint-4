@@ -1,1 +1,171 @@
+5- How to convert the datatypes() of any columns?
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType, DoubleType
 
+
+# Define the schema
+schema = StructType([
+    StructField("Name", StringType(), True),
+    StructField("Age", IntegerType(), True),
+    StructField("Salary", FloatType(), True)
+])
+
+# Sample data
+data = [
+    ("Ravi", 25, 50000.50),
+    ("Karan", 30, 60000.75),
+    ("Arjun", 35, 70000.00)
+]
+
+# Create the DataFrame
+df = spark.createDataFrame(data, schema)
+=================================================================================
+6- How to filter data?
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType, BooleanType, DateType
+
+
+# Sample data
+data = [
+    ("Ram", 25, "Mumbai"),
+    ("Shyam", 30, "Pune"),
+    ("Ravi", 35, "Hyd")
+]
+
+# Define the schema
+columns = ["Name", "Age", "City"]
+
+# Create a DataFrame
+df = spark.createDataFrame(data, schema=columns)
+
+# Show the original DataFrame
+print("Original DataFrame:")
+df.show()
+=================================================================================
+7- How to add new column by concatenating firstname and lastname
+from pyspark.sql.functions import concat, col
+
+
+# Sample data
+data = [
+    ("Ravi", "Kumar"),
+    ("Karan", "Singh"),
+    ("Arjun", "Sharma")
+]
+
+# Define the schema
+columns = ["FirstName", "LastName"]
+
+# Create the DataFrame
+df = spark.createDataFrame(data, columns)
+
+# Show the original DataFrame
+print("Original DataFrame:")
+df.show()
+=================================================================================
+How to use case when statement to derive new column(when sal >2000 then display above middle class else below middle class) using pyspark ?
+from pyspark.sql.functions import when, col
+
+# Sample data
+data = [
+    ("Ravi", 2500),
+    ("Karan", 1500),
+    ("Arjun", 3000),
+    ("David", 1800)
+]
+
+# Define the schema
+columns = ["Name", "Salary"]
+
+# Create the DataFrame
+df = spark.createDataFrame(data, columns)
+
+# Show the original DataFrame
+print("Original DataFrame:")
+df.show()
+=================================================================================
+How to remove duplicates using pyspark?
+# Sample data with duplicate rows
+data = [
+    ("Sonu", 30),
+    ("Monu", 25),
+    ("Sonu", 30),
+    ("Golu", 28),
+    ("Sonu", 30)
+]
+
+# Define the schema
+columns = ["Name", "Age"]
+
+# Create the DataFrame
+df = spark.createDataFrame(data, columns)
+
+# Show the original DataFrame
+print("Original DataFrame:")
+df.show()
+=================================================================================
+Q- Aggregation in pyspark?
+from pyspark.sql.functions import sum, avg, max, min
+
+# Sample data
+data = [
+    ("HR", "John", 2500),
+    ("HR", "Alice", 3000),
+    ("HR", "Bob", 2800),
+    ("IT", "Karan", 5000),
+    ("IT", "David", 4500),
+    ("IT", "Raj", 4700),
+    ("Finance", "Anita", 7000),
+    ("Finance", "Vikram", 6500),
+    ("Finance", "Sam", 6800)
+]
+
+# Define columns
+columns = ["Department", "Employee", "Salary"]
+
+# Create DataFrame
+df = spark.createDataFrame(data, columns)
+
+# Show the DataFrame
+df.show()
+=================================================================================
+Q- union and union by name
+from pyspark.sql.functions import col
+
+# Sample data for the first DataFrame
+data1 = [("John", 25), ("Alice", 30), ("Bob", 35)]
+columns = ["Name", "Age"]
+
+# Sample data for the second DataFrame
+data2 = [("Karan", 28), ("David", 40), ("Alice", 30)]
+columns2 = ["Name", "Age"]
+
+# Create DataFrames
+df1 = spark.createDataFrame(data1, columns)
+df2 = spark.createDataFrame(data2, columns2)
+
+# Show DataFrames
+df1.show()
+df2.show()
+=================================================================================
+Q- Allow missing columns?
+df1 = spark.createDataFrame([(1, "Alice")], ["id", "name"])
+df2 = spark.createDataFrame([("Bob", 2)], ["name", "id"])
+
+result = df1.unionByName(df2)
+result.show()
+=================================================================================
+Q-  Joins in Pyspark?
+Inner Join Returns matching rows from both DataFrames.
+
+Left Join Returns all rows from the left DataFrame, matched with right.
+
+Right Join Returns all rows from the right DataFrame, matched with left.
+
+Full Outer Join Returns all rows from both DataFrames, with nulls where no match exists.
+
+Left Anti Join Returns rows from the left DataFrame without matching rows in the right.
+
+Right Anti Join Returns rows from the right DataFrame without matching rows in the left.
+
+Cross Join Returns Cartesian product of both DataFrames.
+
+Use .join() with the appropriate how parameter (inner, left, right, outer, etc.) to perform different types of joins in PySpark DataFrames.
