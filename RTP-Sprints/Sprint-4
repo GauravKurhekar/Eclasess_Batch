@@ -169,3 +169,26 @@ Right Anti Join Returns rows from the right DataFrame without matching rows in t
 Cross Join Returns Cartesian product of both DataFrames.
 
 Use .join() with the appropriate how parameter (inner, left, right, outer, etc.) to perform different types of joins in PySpark DataFrames.
+
+==============================================================================
+Join Sample data
+# Sample DataFrame 1
+data1 = [("John", "HR", 25),
+         ("Alice", "IT", 30),
+         ("Bob", "Finance", 35)]
+columns1 = ["Name", "Department", "Age"]
+
+# Sample DataFrame 2
+data2 = [("Alice", 6000),
+         ("Bob", 7000),
+         ("David", 8000)]
+columns2 = ["Name", "Salary"]
+
+# Create DataFrames
+df1 = spark.createDataFrame(data1, columns1)
+df2 = spark.createDataFrame(data2, columns2)
+
+# Show DataFrames
+df1.show()
+df2.show()
+
