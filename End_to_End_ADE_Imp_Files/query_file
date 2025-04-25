@@ -61,4 +61,44 @@ df_terr = spark.read.format('csv')\
     .option('inferSchema', 'true')\
     .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Territories')
 
+=================================================================
+Creating View Script
+
+========================================================================================
+Polybase script to connect ADLS to Synapse analytics
+
+ --Step 1- Create master key encryption
+ CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Admin@123';
+
+
+--Step 2- Create database scope credential
+ CREATE DATABASE SCOPED CREDENTIAL cred_gaurav
+ with IDENTITY = 'Managed Identity';
+
+ --Step 3- Creating external data source for silver layer
+ CREATE EXTERNAL DATA SOURCE source_silver
+ WITH(
+    LOCATION = 'https://eclasessgen2.blob.core.windows.net/silver',
+    CREDENTIAL = cred_gaurav
+ )
+
+--Step 4- Create external data source for gold layer
+
+ CREATE EXTERNAL DATA SOURCE source_gold
+ WITH(
+    LOCATION = 'https://eclasessgen2.blob.core.windows.net/gold',
+    CREDENTIAL = cred_gaurav
+ )
+
+ --Step 5- Create external file format
+ CREATE EXTERNAL FILE FORMAT format_parquet
+ WITH
+ (
+    FORMAT_TYPE = PARQUET,
+    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
+ )
+===========================================================================================
+
+
+
 
