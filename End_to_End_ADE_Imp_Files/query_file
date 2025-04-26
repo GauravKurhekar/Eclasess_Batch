@@ -39,6 +39,71 @@ df_terr = spark.read.format('csv')\
 
 =================================================================
 Creating View Script
+---------------------------
+--1 CREATE VIEW CALENDARS
+---------------------------
+CREATE VIEW gold.Calendar
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Calendar/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY1;
+
+---------------------------
+--2 CREATE VIEW CUSTOMERS
+---------------------------
+CREATE VIEW gold.Products
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Customers/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY2;
+
+---------------------------
+--3 CREATE VIEW PRODUCTS
+---------------------------
+CREATE VIEW gold.Products
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Products/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY3;
+
+---------------------------
+--4 CREATE VIEW RETURNS
+---------------------------
+CREATE VIEW gold.Returns
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Returns/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY4;
+
+---------------------------
+--5 CREATE VIEW SALES
+---------------------------
+CREATE VIEW gold.Sales
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Sales/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY5;
+
+---------------------------
+--6 CREATE VIEW TERRITORIES
+---------------------------
+CREATE VIEW gold.Territories
+AS
+    SELECT *
+    FROM OPENROWSET(
+        BULK 'https://eclasessgen2.blob.core.windows.net/silver/AdventureWorks_Territories/',
+        FORMAT = 'PARQUET'
+    ) AS QUERY6;
 
 ========================================================================================
 Polybase script to connect ADLS to Synapse analytics
