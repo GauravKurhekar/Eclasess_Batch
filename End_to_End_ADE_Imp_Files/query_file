@@ -10,52 +10,28 @@ df_cus = spark.read.format('csv')\
     .option('inferSchema', 'true')\
     .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Customers')
 
-# 3. Product Categories
-df_prod_cat = spark.read.format('csv')\
-    .option('header', 'true')\
-    .option('inferSchema', 'true')\
-    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Product_Categories')
 
-# 4. Product Subcategories
-df_prod_sub_cat = spark.read.format('csv')\
-    .option('header', 'true')\
-    .option('inferSchema', 'true')\
-    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Product_Subcategories')
-
-# 5. products
+# 3. products
 df_products = spark.read.format('csv')\
     .option('header', 'true')\
     .option('inferSchema', 'true')\
     .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Products')
 
 
-#6. Product Returns
+# 4. Product Returns
 df_prod_returns = spark.read.format('csv')\
     .option('header', 'true')\
     .option('inferSchema', 'true')\
     .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Returns')
 
-# 7. Sales 2015
+# 5. Sales 
 df_sales_15 = spark.read.format('csv')\
     .option('header', 'true')\
     .option('inferSchema', 'true')\
-    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Sales_2015')
+    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Sales')
 
 
-# 8. Sales 2016
-df_sales_16 = spark.read.format('csv')\
-    .option('header', 'true')\
-    .option('inferSchema', 'true')\
-    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Sales_2016')
-
-# 9. Sales 2017
-df_sales_17 = spark.read.format('csv')\
-    .option('header', 'true')\
-    .option('inferSchema', 'true')\
-    .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Sales_2017')
-
-
-#10. Territories
+# 6. Territories
 df_terr = spark.read.format('csv')\
     .option('header', 'true')\
     .option('inferSchema', 'true')\
