@@ -35,7 +35,7 @@ df_prod_returns = spark.read.format('csv')\
     .option('inferSchema', 'true')\
     .load('abfss://bronze@eclasessgen2.dfs.core.windows.net/AdventureWorks_Returns')
 
-# 7. Sales 2017
+# 7. Sales 2015
 df_sales_15 = spark.read.format('csv')\
     .option('header', 'true')\
     .option('inferSchema', 'true')\
