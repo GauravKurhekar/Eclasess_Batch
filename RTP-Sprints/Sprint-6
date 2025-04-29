@@ -61,6 +61,36 @@ INSERT INTO partitioned_emp_sql VALUES
 (5, 'Eva', 'Japan');
 =========================================================================================================================================================
 Question 112- Read Specific Data Subsets using Partition Filters: Efficiently query and retrieve data by filtering on partition columns to reduce data scanning?
+%sql
+--STEP1- Create table
+-- Create the Delta Table
+CREATE TABLE delta_table(
+  ID INT,
+  Name STRING,
+  Country STRING
+)
+USING DELTA
+LOCATION '/FileStore/Tables/Delta/delta_table';
+
+%sql
+--Step2- Insert Data into the Partitioned Delta Table
+INSERT INTO delta_table VALUES
+(1, 'Alice', 'India'),
+(2, 'Bob', 'USA'),
+(3, 'Charlie', 'France'),
+(4, 'David', 'Germany'),
+(5, 'Eva', 'Japan');
+
+--Step 2: Perform some Updates and delete to Generate Versions
+
+-- Update the table to create a new version
+UPDATE delta_table
+SET Name = 'Alice_updated'
+WHERE ID = 1;
+
+-- Add another version by deleting data
+DELETE FROM delta_table WHERE Country = 'France';
+
 =========================================================================================================================================================
 Question 113- Read Old Table Versions with Time Travel Filters: Access historical table versions by specifying a timestamp or version number for analysis or rollback?
 =========================================================================================================================================================
