@@ -1,0 +1,8 @@
+Step 2- Read the streaming data using spark.readStream.format('csv').schema(schema)
+from pyspark.sql import SparkSession
+sdf = spark.readStream.format("csv").schema(schema).option("header", "true").load("/FileStore/tables/stream_read/")
+display(sdf)
+
+Step 2- Write the streaming data using spark.writeStream.format('csv').outputMode('append').option('checkpointLocation').start().awaitTermination()
+from pyspark.sql import SparkSession
+d_f = sdf.writeStream.format("parquet").outputMode("append").option("path", "/FileStore/tables/stream_write/").option("checkpointLocation", "/FileStore/tables/checkpoint/").start().awaitTermination()
