@@ -8,7 +8,8 @@ from pyspark.sql import SparkSession
 d_f = sdf.writeStream.format("parquet").outputMode("append").option("path", "/FileStore/tables/stream_write/").option("checkpointLocation", "/FileStore/tables/checkpoint/").start().awaitTermination()
 
 ==============================================================================================================
- # Notebook 1: ingest_data
+Question- Workflow in databricks 
+# Notebook 1: ingest_data
 
 # Use a default path to read the uploaded file
 csv_path = "/FileStore/tables/EmpPune.csv"
