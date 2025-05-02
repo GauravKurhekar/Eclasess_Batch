@@ -1,0 +1,51 @@
+Step 1- Read the streaming data using spark.readStream.format('csv').schema(schema)
+from pyspark.sql import SparkSession
+sdf = spark.readStream.format("csv").schema(schema).option("header", "true").load("/FileStore/tables/stream_read/")
+display(sdf)
+
+Step 2- Write the streaming data using spark.writeStream.format('csv').outputMode('append').option('checkpointLocation').start().awaitTermination()
+from pyspark.sql import SparkSession
+d_f = sdf.writeStream.format("parquet").outputMode("append").option("path", "/FileStore/tables/stream_write/").option("checkpointLocation", "/FileStore/tables/checkpoint/").start().awaitTermination()
+
+==============================================================================================================
+ # Notebook 1: ingest_data
+
+# Use a default path to read the uploaded file
+csv_path = "/FileStore/tables/EmpPune.csv"
+
+# Read the CSV file into a DataFrame
+df = spark.read.option("header", True).csv(csv_path)
+
+# Show a sample of the data
+df.show()
+
+# Save as a table for downstream use
+df.write.mode("overwrite").saveAsTable("raw_data")
+
+print("Data ingested and saved as 'raw_data'")
+
+
+# Notebook 2: transform_data
+df = spark.table("raw_data")
+
+# Filtering records where Salary > 80000
+filtered_df = df[df['Salary'] > 80000]
+
+filtered_df.write.mode("overwrite").saveAsTable("cleaned_data")
+
+print("Data transformed successfully.")
+
+# Notebook 3: report_data
+
+df = spark.table("cleaned_data")
+summary = df.groupBy("Salary").count()
+
+summary.show()
+summary.write.mode("overwrite").saveAsTable("summary_report")
+
+print("Summary generated successfully.")
+
+
+
+
+
