@@ -61,7 +61,7 @@ df = spark.createDataFrame(data, columns)
 print("Original DataFrame:")
 df.show()
 =================================================================================
-How to use case when statement to derive new column(when sal >2000 then display above middle class else below middle class) using pyspark ?
+Q 87-How to use case when statement to derive new column(when sal >2000 then display above middle class else below middle class) using pyspark ?
 from pyspark.sql.functions import when, col
 
 # Sample data
@@ -82,7 +82,7 @@ df = spark.createDataFrame(data, columns)
 print("Original DataFrame:")
 df.show()
 =================================================================================
-How to remove duplicates using pyspark?
+Question 88- How to remove duplicates using pyspark?
 # Sample data with duplicate rows
 data = [
     ("Sonu", 30),
@@ -101,6 +101,23 @@ df = spark.createDataFrame(data, columns)
 # Show the original DataFrame
 print("Original DataFrame:")
 df.show()
+===================================================================================
+Q 89- How to find second highest salary(overall and department wise)?
+# Sample data with departments
+data_with_departments = [
+    ("John", "HR", 2500),
+    ("Alice", "HR", 3000),
+    ("Bob", "IT", 2000),
+    ("Karan", "IT", 2800),
+    ("David", "HR", 3200),
+    ("Eve", "IT", 2600)
+]
+
+columns_with_departments = ["Name", "Department", "Salary"]
+
+# Create DataFrame
+df_dept = spark.createDataFrame(data_with_departments, columns_with_departments)
+df_dept.show()
 =================================================================================
 Q- Aggregation in pyspark?
 from pyspark.sql.functions import sum, avg, max, min
