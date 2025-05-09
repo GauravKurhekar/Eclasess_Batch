@@ -1,3 +1,49 @@
+
+------------Unity Catalog----------------------------------
+5. Create table under schema and add some records
+%sql
+CREATE TABLE bronze.emp(
+  ID INT, NAME STRING, DEPT STRING
+);
+
+--Add some records
+INSERT INTO main.bronze.emp VALUES
+(1, 'John', 'Sales'),
+(2, 'Alice', 'HR'),
+(3, 'Bob', 'IT');
+
+-- View the records
+%sql
+SELECT * FROM main.bronze.emp;
+
+8. if you want to create a table in the legacy hive_metastore
+%sql
+--1. Use the hive_metastore catalog and a schema (e.g., default or your own):
+USE CATALOG hive_metastore;
+USE SCHEMA default;
+
+-- 2. Create the table:
+CREATE TABLE IF NOT EXISTS emp (
+  ID INT,
+  NAME STRING,
+  DEPT STRING
+);
+
+10- create external location
+%sql
+-- Use legacy metastore instead of Unity Catalog
+USE CATALOG hive_metastore;
+USE SCHEMA default;
+
+CREATE TABLE IF NOT EXISTS emp_external (
+    id INT,
+    emp_name STRING,
+    dept_code STRING
+)
+USING DELTA
+LOCATION 'abfss://silver@gen2accountnew.dfs.core.windows.net/external_folder';
+==============================================================================================================
+------------Structure streaming workflows------------------------
 Step 1- Read the streaming data using spark.readStream.format('csv').schema(schema)
 from pyspark.sql import SparkSession
 sdf = spark.readStream.format("csv").schema(schema).option("header", "true").load("/FileStore/tables/stream_read/")
