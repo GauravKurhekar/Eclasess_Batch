@@ -347,14 +347,37 @@ Question 108- create one dataframe contains data of customer related to differen
     # Ensure city-wise data is saved to separate files using partitionBy
     output_path = "abfss://gaurav-container@gauravstorageacc12.dfs.core.windows.net/customer-data/"
 =====================================================================================================================
-Question 109- "Create DataFrames: Create two DataFrames, one for departments and one for employees.
-              Perform Inner Join and Aggregate: Perform an inner join between the department and employee DataFrames on the department name. Then, 
-              aggregate the data on the department name to get the total salary and total number of employees for each department.
-              Apply Filter: Apply a filter to select only those departments which have more than 2 employees.
-              Write Filtered Result to DBFS as CSV: Write the filtered result (departments with more than 2 employees) to a CSV file in DBFS.
-              Read CSV File from DBFS and Create Temp View: Read the CSV file from DBFS into a DataFrame. Create a temporary view on this DataFrame.
-              Write SQL Query to Filter Data: Write an SQL query to filter the data from the temporary view. Specifically, 
-              filter for departments where the totWrite Result Back to DBFS as Parquet File: Execute the SQL query on the temporary view and write the result back to DBFS as a Parquet file 
+Question 109- 
+1- Create DataFrames: Create two DataFrames, one for departments and one for employees.
+2- Perform Inner Join and Aggregate: Perform an inner join between the department and employee DataFrames on the department name. Then, 
+3- Aggregate the data on the department name to get the total salary and total number of employees for each department.
+4- Apply Filter: Apply a filter to select only those departments which have more than 2 employees.
+5- Write Filtered Result to DBFS as CSV: Write the filtered result (departments with more than 2 employees) to a CSV file in DBFS.
+6- Read CSV File from DBFS and Create Temp View: Read the CSV file from DBFS into a DataFrame. 
+7- Create a temporary view on this DataFrame.
+8- Write SQL Query to Filter Data: Write an SQL query to filter the data from the temporary view. 
+9- Specifically, filter for departments where the totWrite Result Back to DBFS as Parquet File: Execute the SQL query on the temporary view and write the result back to DBFS as a Parquet file 
               where salary is greater than 2000."
+
+from pyspark.sql.functions import col, sum, count
+# Create Department DataFrame
+dept_data = [("HR", 1), ("IT", 2), ("Finance", 3), ("Sales", 4)]
+dept_columns = ["DeptName", "DeptID"]
+dept_df = spark.createDataFrame(data=dept_data, schema=dept_columns)
+
+# Create Employee DataFrame
+emp_data = [
+    ("Alice", "HR", 3000),
+    ("Bob", "IT", 4000),
+    ("Charlie", "IT", 4500),
+    ("David", "Finance", 3500),
+    ("Eve", "Finance", 2000),
+    ("Frank", "Sales", 1800),
+    ("Grace", "Sales", 2200),
+    ("Hank", "Sales", 2500)
+]
+emp_columns = ["EmpName", "DeptName", "Salary"]
+emp_df = spark.createDataFrame(data=emp_data, schema=emp_columns)
+
 =======================================================================================
 
