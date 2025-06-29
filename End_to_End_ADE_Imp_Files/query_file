@@ -1,3 +1,35 @@
+####### Create mount point between ADLS using Databricks#######
+
+# 1. Replace all <storage-account> with our storage account
+# 2. Replace <application-id> or <client_id> at 3rd line with app_id(with quote)
+# 3. Replace service_credential at 4th line with secret(with quote)
+# 4. Replace <directory-id> at 5th line with tenant_id(without quote)
+
+spark.conf.set("fs.azure.account.auth.type.<storage-account>.dfs.core.windows.net", "OAuth")
+spark.conf.set("fs.azure.account.oauth.provider.type.<storage-account>.dfs.core.windows.net", "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider")
+spark.conf.set("fs.azure.account.oauth2.client.id.<storage-account>.dfs.core.windows.net", "<application-id>")
+spark.conf.set("fs.azure.account.oauth2.client.secret.<storage-account>.dfs.core.windows.net", service_credential)
+spark.conf.set("fs.azure.account.oauth2.client.endpoint.<storage-account>.dfs.core.windows.net", "https://login.microsoftonline.com/<directory-id>/oauth2/token")
+
+####### Code from Chat GPT with work perfactly #######
+# Replace <client_id> in 3rd line using client_id with double quote("")
+# Replace <client_secret> in 4th line with secret with double quote("")
+# Replace <tenant_id> in 5th line without double quote("")
+configs = {
+  "fs.azure.account.auth.type": "OAuth",
+  "fs.azure.account.oauth.provider.type": "org.apache.hadoop.fs.azurebfs.oauth2.ClientCredsTokenProvider",
+  "fs.azure.account.oauth2.client.id": "<client_id>",
+  "fs.azure.account.oauth2.client.secret": "<client_secret>",
+  "fs.azure.account.oauth2.client.endpoint": "https://login.microsoftonline.com/<tenant_id>/oauth2/token"
+}
+
+dbutils.fs.mount(
+  source = "abfss://<container_name>@<storage_account_name>.dfs.core.windows.net/",
+  mount_point = "/mnt/<mount_name>",
+  extra_configs = configs
+)
+
+==========================================================================================
 # 1. Calendar
 df_cal = spark.read.format('csv')\
     .option('header', 'true')\
@@ -110,6 +142,14 @@ df_territories.write.format('parquet')\
     .mode('append')\
     .option("path", "abfss://silver@projectstorage.dfs.core.windows.net/AdventureWorks_Territories")\
     .save()
+=================================================================
+--Open Rowset function syntax
+SELECT *
+    FROM 
+        OPENROWSET(
+            BULK 'https://<storage_account_name>.dfs.core.windows.net/silver/<file_name>/',
+            FORMAT = 'PARQUET'
+        ) as query1
 
 =================================================================
 Creating View Script
@@ -181,8 +221,8 @@ AS
 
 ========================================================================================
 Polybase script to connect ADLS to Synapse analytics
-
- --Step 1- Create master key encryption
+Note- Run this query in newly created database(synapsedatabase) not in master DB
+ --Step 1- Create master key encryption            --Drop master key if already created DROP MASTER KEY;
  CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Admin@123';
 
 
@@ -213,14 +253,15 @@ Polybase script to connect ADLS to Synapse analytics
     DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'
  )
 ===========================================================================================
-CETAS QUERY
+--CETAS QUERY
+Note- Run this query in newly created database(synapsedatabase) not in master DB
 ---------------------------------------
 --1 CREATE EXTERNAL TABLE EXTCALENDAR
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Calendars
+CREATE EXTERNAL TABLE gold.Calendars_ext
 WITH
 (
-    LOCATION = 'extCalendars',
+    LOCATION = 'extCalendars_new',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )AS
@@ -229,10 +270,10 @@ SELECT * FROM gold.Calendars
 ---------------------------------------
 --2 CREATE EXTERNAL TABLE EXTCUSTOMERS
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Customers
+CREATE EXTERNAL TABLE gold.Customers_ext
 WITH
 (
-    LOCATION = 'extcustomers',
+    LOCATION = 'extcustomers_new',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )AS
@@ -241,10 +282,10 @@ SELECT * FROM gold.Customers
 ---------------------------------------
 --3 CREATE EXTERNAL TABLE EXTPRODUCTS
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Products
+CREATE EXTERNAL TABLE gold.Products_ext
 WITH
 (
-    LOCATION = 'extproducts',
+    LOCATION = 'extproducts_new',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )AS
@@ -253,10 +294,10 @@ SELECT * FROM gold.Products
 ---------------------------------------
 --4 CREATE EXTERNAL TABLE EXTRETURNS
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Returns
+CREATE EXTERNAL TABLE gold.Returns_ext
 WITH
 (
-    LOCATION = 'extreturns',
+    LOCATION = 'extreturns_new',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )AS
@@ -266,11 +307,11 @@ SELECT * FROM gold.Returns
 ---------------------------------------
 --5 CREATE EXTERNAL TABLE EXTSALES
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Sales
+CREATE EXTERNAL TABLE gold.Sales_ext
 WITH
 (
     LOCATION = 'extsales',
-    DATA_SOURCE = source_gold,
+    DATA_SOURCE = source_gold_new,
     FILE_FORMAT = format_parquet
 )AS
 SELECT * FROM gold.Sales
@@ -279,10 +320,10 @@ SELECT * FROM gold.Sales
 ---------------------------------------
 --6 CREATE EXTERNAL TABLE EXTTERRITORIES
 ---------------------------------------
-CREATE EXTERNAL TABLE gold.Territories
+CREATE EXTERNAL TABLE gold.Territories_ext
 WITH
 (
-    LOCATION = 'extterritories',
+    LOCATION = 'extterritories_new',
     DATA_SOURCE = source_gold,
     FILE_FORMAT = format_parquet
 )AS
